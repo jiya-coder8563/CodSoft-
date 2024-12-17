@@ -1,0 +1,50 @@
+import re
+
+# Define a function for the chatbot
+def chatbot():
+    print("Hello! I am a simple chatbot. How can I assist you today?")
+    
+    while True:
+        user_input = input("You: ").lower()  # Convert input to lowercase to make matching easier
+        
+        # Exit condition
+        if user_input in ['exit', 'quit', 'bye', 'goodbye']:
+            print("Chatbot: Goodbye! Have a great day!")
+            break
+        
+        # Respond to specific queries using if-else statements or regex matching
+        elif re.search(r'hello|hi|hey', user_input):
+            print("Chatbot: Hi there! How can I help you?")
+        
+        elif re.search(r'how are you', user_input):
+            print("Chatbot: I'm just a bot, but I'm doing great! How about you?")
+        
+        elif re.search(r'what is your name', user_input):
+            print("Chatbot: I am a simple chatbot without a name. But you can call me 'Bot'.")
+        
+        elif re.search(r'help', user_input):
+            print("Chatbot: Sure! I can help with basic queries. Try asking 'how are you?' or 'what is your name?'")
+        
+        elif re.search(r'what time', user_input):
+            from datetime import datetime
+            now = datetime.now()
+            current_time = now.strftime("%H:%M:%S")
+            print(f"Chatbot: The current time is {current_time}.")
+        
+        elif re.search(r'what day is it', user_input):
+            from datetime import datetime
+            today = datetime.today()
+            day = today.strftime("%A")
+            print(f"Chatbot: Today is {day}.")
+        
+        elif re.search(r'weather', user_input):
+            print("Chatbot: I can't check the weather right now, but you can check a weather app or website.")
+        
+        elif re.search(r'age|old', user_input):
+            print("Chatbot: I don't have an age. I'm just a program!")
+        
+        else:
+            print("Chatbot: Sorry, I didn't understand that. Can you rephrase it?")
+
+# Start the chatbot
+chatbot()
