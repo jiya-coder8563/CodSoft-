@@ -1,0 +1,33 @@
+def generate_caption(model, img_path, tokenizer, max_length):
+    # Extract features from the image
+    image_features = extract_features(img_path)
+    
+    # Initialize caption with start token
+    caption = ['startseq']
+    
+    # Generate the caption one word at a time
+    for _ in range(max_length):
+        # Convert caption to sequence
+        sequence = tokenizer.texts_to_sequences([caption])
+        sequence = pad_sequences(sequence, maxlen=max_length, padding='post')
+        
+        # Predict next word
+        predicted_probs = model.predict([image_features.reshape(1, -1), sequence])
+        predicted_word_idx = np.argmax(predicted_probs)
+        
+        # Convert index to word
+        predicted_word = tokenizer.index_word[predicted_word_idx]
+        
+        # Append predicted word to caption
+        caption.append(predicted_word)
+        
+        # Stop if the end token is predicted
+        if predicted_word == 'endseq':
+            break
+    
+    return ' '.join(caption[1:])
+
+# Example: Generate caption for a new image
+new_image_path = 'path_to_new_image.jpg'
+generated_caption = generate_caption(model, new_image_path, tokenizer, max_length)
+print(generated_caption)
